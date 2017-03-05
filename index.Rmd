@@ -1,0 +1,15 @@
+---
+title: "Final assignment"
+output: html_document
+    theme: lumen
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    fig_caption: true
+    fig_width: 9
+    fig_height: 9
+    code_folding: show
+---
+
+
+##Include some temporary text/code in the index.Rmd, knit the index.Rmd to index.html and include it in the repository.

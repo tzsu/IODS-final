@@ -1,0 +1,99 @@
+###Brief description of the "research question" you are exploring, possibly including your hypothesis (max 2 points)
+
+###Visually clear and interesting explorations of the variables of interest in the data, from the point of view of your research question. Include interpretations of the distributions and relationships of the variables. Use captions to draw the reader¡¦s focus on the interesting parts of your tables and graphics. (max 8 points)
+
+###Brief description of the method you are using in your own words (max 3 points)
+
+###Presentation of the results of your analysis including visualizations and summaries and a thorough interpretation of the results including a validation analysis of the method. (max 16 points)
+
+###Conclusions and discussion (max 2 points)
+
+###An ¡¥abstract¡¦ at the beginning of the page with a summary of your analysis (max 2 points)
+
+*In this final assignment, I would like to use the **human data** (from week 5) to see if we can **predict the Gross national income per capita** with some human development and gender inequality variables. I will use the regression and model validation analysis technique we learned in week 2.*
+
+#### Initial hypothesis: here I have chosen three explanatory variables to predict GNI per capita
+- **Life expectancy at birth (life.exp)** means the long and healthy life citizens can expect, good health is an important factor to wealth, so we can use life.exp to predict GNI.
+- **Gender equal particiaption in labour force (ratiolab.fm)** can be use to predict GNI.
+- **Expected years of schooling (exp.y.edu)**, more years of education, more knowledge to boost the country's economy, so is also a good indicator for GNI preidiction.
+
+## Data wrangling:
+####you can see the processed data wrangling in my github: https://github.com/tzsu/IODS-project/blob/master/data/create_human.R
+####further data wrangling 
+#### Original data source: UN DEvelopment Programme - Human Development Reports from http://hdr.undp.org/en/content/human-development-index-hdi
+
+### 1. About the Human data: 
+*The Human data includes two data sets: "Human development" and "Gender inequality". We keep only the countries in both data sets, and exclude rows with missing values. GNI is transform to numeric, and two ratios concerning gender education and labour participation is presented here. Now the **Human** data we will use for performing analysis has 155 observations and the folowing 8 variables:*
+
+
+####the 8 variables:
+- ratioedu2.fm = Share of female population with secondary education over(/) share of male population with secondary education
+- ratiolab.fm = Share of female population that participates in labour force over(/) share of male population that participates in labour force
+- exp.y.edu = Expected years of schooling
+- life.exp = Life expectancy at birth
+- gni.cap = Gross national income per capita
+- mmr = Maternal mortality ratio
+- ad.b.r = Adolescent birth rate
+- par% = population with at least some secondary education
+
+```{r, include=FALSE}
+#analysis
+setwd("D:/Sydney Uni/forth semester units of study/Intro to Open Data Science/IODS-project")
+human <- as.data.frame(read.table('data/human.csv', sep="\t", header = TRUE))
+
+#access package
+library(dplyr)
+library(ggplot2)
+library(GGally)
+# access packages FactoMineR and tidyr
+library(FactoMineR)
+library(tidyr)
+library(corrplot)
+```
+
+#### Take a glimpse at the data set
+```{r, echo=TRUE}
+#A glimpse at the human data set
+glimpse(human)
+#Summary of the variables
+summary(human)
+```
+
+### 2. Graphical overview of the data
+
+#### The correlation figure can show the correlation more easily than the scatter plot matrix.
+```{r, echo=TRUE}
+#pair up all 8 variables to see if there is any relationship
+ggpairs(human)
+corrplot(round(cor(human), digits = 2), method = "circle", type = "upper", tl.pos = "d", tl.cex = 0.8)
+```
+
+#### From the correlation pigure, ratiolab.fm seems to have no relationship with gni.cap, but let's fit a multiple regression model to the data and see.
+
+### 3. Fitting of the regression model
+#### The target variable is GNI per capita, and the three explanatory variables are:
+-life.exp = Life expectancy at birth
+- ratiolab.fm = Share of female population that participates in labour force over(/) share of male population that participates in labour force
+- exp.y.edu = Expected years of schooling
+
+```{r, echo=TRUE}
+# create a regression model
+my_r_model <- lm(gni.cap ~ life.exp + ratiolab.fm + exp.y.edu ,  data = human)
+# print out a summary of the model
+summary(my_r_model)
+```
+
+####The baove summary shows that the multiple regression equation to be approximately:
+**gni.cap = -69935 + life.exp x 803 + ratiolab.fm x 1193 + exp.y.edu x 2211**
+- if the value *life.exp* increase by one, *gni.cap* will increase by 803 (if other variables stay the same), and so on. When all three explanatory variables are 0, *gni.cap* is predicted to be -69935.(Which in real life will not happen. ) 
+- From F test for overall significance, we can conclude that at least one explanatory variable affects *gni.cap*.
+- The t test shows evidence of *life.exp* affecting predictions for *gni.cap*, however, it is also quite clear that *ratiolab.fm* has no linear relationship with our target variables. Thus it will make more sense to eliminate the least probability value, ratiolab.fm to get a more accurate equation for prediction.
+
+#### Now refit the regression model with just two variables:
+
+```{r, echo=TRUE}
+# recreate a regression model
+my_r_model <- lm(gni.cap ~ life.exp + exp.y.edu ,  data = human)
+# print out a summary of the model
+summary(my_r_model)
+```

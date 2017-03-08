@@ -1,6 +1,10 @@
 ---
 title: "Final assignment"
-output: html_document
+author: "Tzu-lin Su (Lin)"
+date: "7/March/2017"
+email: "tzu-lin.su@helsinki.fi"
+output:
+  html_document:
     theme: lumen
     toc: true
     toc_float: true
@@ -13,3 +17,10 @@ output: html_document
 
 
 ##Include some temporary text/code in the index.Rmd, knit the index.Rmd to index.html and include it in the repository.
+
+***
+  
+```{r child = "finalchapter.Rmd", echo=TRUE}
+```
+  
+***

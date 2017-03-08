@@ -5,9 +5,8 @@
 - **Expected years of schooling (exp.y.edu)**, more years of education, more knowledge to boost the country's economy, so is also a good indicator for GNI preidiction.
 
 ## Data wrangling:
-####you can see the processed data wrangling in my github: https://github.com/tzsu/IODS-project/blob/master/data/create_human.R
-####no further data wrangling was done for this assignment, but here is the Rscript
-https://github.com/tzsu/IODS-final/blob/master/create_human_final.R
+####You can see the processed data wrangling in my github: https://github.com/tzsu/IODS-project/blob/master/data/create_human.R
+####No further data wrangling was done for this assignment, but here is the Rscript https://github.com/tzsu/IODS-final/blob/master/create_human_final.R
 #### Original data source: UN DEvelopment Programme - Human Development Reports from http://hdr.undp.org/en/content/human-development-index-hdi
 
 ## Analysis:
@@ -50,7 +49,7 @@ summary(human)
 
 ### 2. Graphical overview of the data
 
-#### The correlation figure can show the correlation more easily than the scatter plot matrix.
+#### The correlation figure can show the correlation more easily than the scatter plot matrix. But with the scatter plot matrix, we can see that except for exp.y.edu, all other variables are not normal distributed.
 ```{r, echo=TRUE}
 #pair up all 8 variables to see if there is any relationship
 ggpairs(human)
@@ -76,7 +75,7 @@ summary(my_r_model)
 ####The above summary shows that the multiple regression equation to be approximately:
 **gni.cap = -69935 + (life.exp x 803) + (ratiolab.fm x 1193) + (exp.y.edu x 2211)**
 
-- if the value *life.exp* increase by one, *gni.cap* will increase by 803 (if other variables stay the same), and so on. When all three explanatory variables are 0, *gni.cap* is predicted to be -69935.(Which in real life will not happen. ) 
+- if the value *life.exp* increase by one, *gni.cap* will increase by 803 (if other variables stay the same), and so on. When all three explanatory variables are 0, *gni.cap* is predicted to be -69935. (Which in real life will not happen.) 
 - From F test for overall significance, we can conclude that at least one explanatory variable affects *gni.cap*.
 - The t test shows evidence of *life.exp* affecting predictions for *gni.cap*, however, it is also quite clear that *ratiolab.fm* has no linear relationship with our target variables. Thus it will make more sense to eliminate the least probability value, ratiolab.fm to get a more accurate equation for prediction.
 
@@ -118,7 +117,7 @@ plot(my_r_model, which = c(1,2,5))
 - The Residuals vs Leverage plot can measure how much impact a single observation has on the model. As the x-axis scale is relatively narrow, all observations are within 0.10, thus we can assume that there is no outliers distorting the model's coefficiency.
 
 ### 6. Conclusion
-#### My initial hypothesis is not supported by this analysis. The use of life expectancy at birh,  expected year of study, and ratiolab.fm (least correlated) to predict gross national income per capita is not very reliable. However, it is true that if a country has higher life expectancy and more years of study, it is expected to have higher GNI per capita. 
+#### My initial hypothesis is not supported by this analysis. The use of life expectancy at birth,  expected year of study, and ratiolab.fm (least correlated) to predict gross national income per capita is not very reliable. However, it is true that if a country has higher life expectancy and more years of schooling, it is expected to have higher GNI per capita. 
 
 
 

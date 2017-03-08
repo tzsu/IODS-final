@@ -1,5 +1,5 @@
 ---
-title: "Can We Predict GNI Per Capita? (Final assignment)"
+title: "Can We Predict GNI Per Capita?      (Final assignment)"
 author: "Tzu-lin Su (Lin) tzu-lin.su@helsinki.fi"
 date: "7/March/2017"
 output:

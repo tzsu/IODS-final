@@ -16,4 +16,4 @@ read.table("human.csv", sep = ';', header = TRUE)
 
 glimpse(human)
 
-#No further data wrangling. Analysis will be performed from the human data I have processed during week 4 and 5
+#No further data wrangling. Analysis will be performED from the human data I have processed during week 4 and 5

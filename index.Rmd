@@ -1,8 +1,7 @@
 ---
-title: "Final assignment"
-author: "Tzu-lin Su (Lin)"
+title: "Can We Predict GNI Per Capita? (Final assignment)"
+author: "Tzu-lin Su (Lin) tzu-lin.su@helsinki.fi"
 date: "7/March/2017"
-email: "tzu-lin.su@helsinki.fi"
 output:
   html_document:
     theme: lumen
@@ -16,7 +15,7 @@ output:
 ---
 
 
-###*In this final assignment, I would like to use the **human data** (from week 5) to see if we can **predict the Gross national income per capita** with some human development and gender inequality variables. I will use the regression and model validation analysis technique we learned in week 2.*
+####In this final assignment, I would like to use the **human data** (from week 5) to see if we can **predict the Gross national income per capita** with some human development and gender inequality variables. I will use the regression and model validation analysis technique we learned in week 2.
 ***
   
 ```{r child = "finalchapter.Rmd", echo=TRUE}

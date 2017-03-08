@@ -6,9 +6,11 @@
 
 ## Data wrangling:
 ####you can see the processed data wrangling in my github: https://github.com/tzsu/IODS-project/blob/master/data/create_human.R
-####further data wrangling 
+####no further data wrangling was done for this assignment, but here is the Rscript
+https://github.com/tzsu/IODS-final/blob/master/create_human_final.R
 #### Original data source: UN DEvelopment Programme - Human Development Reports from http://hdr.undp.org/en/content/human-development-index-hdi
 
+## Analysis:
 ### 1. About the Human data: 
 *The Human data includes two data sets: "Human development" and "Gender inequality". We keep only the countries in both data sets, and exclude rows with missing values. GNI is transform to numeric, and two ratios concerning gender education and labour participation is presented here. Now the **Human** data we will use for performing analysis has 155 observations and the folowing 8 variables:*
 
@@ -72,12 +74,13 @@ summary(my_r_model)
 ```
 
 ####The above summary shows that the multiple regression equation to be approximately:
-**gni.cap = -69935 + life.exp x 803 + ratiolab.fm x 1193 + exp.y.edu x 2211**
+**gni.cap = -69935 + (life.exp x 803) + (ratiolab.fm x 1193) + (exp.y.edu x 2211)**
 
 - if the value *life.exp* increase by one, *gni.cap* will increase by 803 (if other variables stay the same), and so on. When all three explanatory variables are 0, *gni.cap* is predicted to be -69935.(Which in real life will not happen. ) 
 - From F test for overall significance, we can conclude that at least one explanatory variable affects *gni.cap*.
 - The t test shows evidence of *life.exp* affecting predictions for *gni.cap*, however, it is also quite clear that *ratiolab.fm* has no linear relationship with our target variables. Thus it will make more sense to eliminate the least probability value, ratiolab.fm to get a more accurate equation for prediction.
 
+### 4. Multiple regression model - remove ratiolab.fm from the previous model
 #### Now refit the regression model with just two variables:
 
 ```{r, echo=TRUE}
@@ -86,3 +89,36 @@ my_r_model <- lm(gni.cap ~ life.exp + exp.y.edu ,  data = human)
 # print out a summary of the model
 summary(my_r_model)
 ```
+
+#### The new summary shows that the regression equation at about
+#### **gni.cap = -68592 + (life.exp x 790)  + (exp.y.edu x 2246)**
+- Both the explanatory variables have positive affects on the target variable. Which means if life expectancy or year of education increases, we can expect Gross national income per capita also to increase.
+- Multiple R-squared here indicates that 43.7% of the variation in gni.cap is explained by the variation in life.exp and exp.y.edu. This means the model is not very good since there is still about 56% of the relationship between the explanatory and the dependent variable remains unexplained.
+
+### 5. Model validation
+#### The linear regression model assumes the following 4 points:
+- Errors are normally distributed for any given value.
+- Errors values are statistically independent.
+- The probablity distribution of the errors has constant variances.
+- The size of a given error does not depend on the explanatory variables
+
+```{r, echo=FALSE}
+# create a regression model with two explanatory variables
+my_r_model <- lm(gni.cap ~ life.exp + exp.y.edu ,  data = human)
+# draw diagnostic plots using the plot() function. Choose the plots 1, 2 and 5
+par(mfrow = c(2,2))
+plot(my_r_model, which = c(1,2,5))
+```
+
+
+- The Residuals vs Fitted values plot here has a slightly "v" shape, which does not support the assumption of: constant variance of errors and the size of the errors do not depend on the explanatory variables. There should be no pattern for the assumption to be valid.
+
+- The Normal QQ plot here shows that a resonable fit with the line, which means the errors are normally distributed. However, the model is less fitted in both ends of values.
+
+- The Residuals vs Leverage plot can measure how much impact a single observation has on the model. As the x-axis scale is relatively narrow, all observations are within 0.10, thus we can assume that there is no outliers distorting the model's coefficiency.
+
+### 6. Conclusion
+#### My initial hypothesis is not supported by this analysis. The use of life expectancy at birh,  expected year of study, and ratiolab.fm (least correlated) to predict gross national income per capita is not very reliable. However, it is true that if a country has higher life expectancy and more years of study, it is expected to have higher GNI per capita. 
+
+
+

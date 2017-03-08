@@ -16,8 +16,7 @@ output:
 ---
 
 
-##Include some temporary text/code in the index.Rmd, knit the index.Rmd to index.html and include it in the repository.
-
+###*In this final assignment, I would like to use the **human data** (from week 5) to see if we can **predict the Gross national income per capita** with some human development and gender inequality variables. I will use the regression and model validation analysis technique we learned in week 2.*
 ***
   
 ```{r child = "finalchapter.Rmd", echo=TRUE}
